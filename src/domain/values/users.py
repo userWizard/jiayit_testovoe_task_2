@@ -2,6 +2,8 @@ import re
 from dataclasses import dataclass
 
 from src.domain.exceptions.users import (
+    EmptyEmailException,
+    EmptyNameException,
     NameValueException,
     EmailValueException,
     IdValueException,
@@ -18,7 +20,14 @@ from src.common.temps import (
 class Name(BaseValueObject):
     value: str
     
+    def __check_empty_name(self):
+        if not self.value:
+            raise EmptyNameException()
+    
     def valiadte(self):
+        if self.__check_empty_name():
+            raise EmptyNameException()
+        
         if not re.match(NAME, self.value):
             raise NameValueException(self.value)
 
@@ -29,7 +38,14 @@ class Name(BaseValueObject):
 class Email(BaseValueObject):
     value: str
     
+    def __check_empty_email(self):
+        if not self.value:
+            raise EmptyEmailException()
+    
     def validate(self):
+        if self.__check_empty_email:
+            return EmptyEmailException()
+
         if not re.match(EMAIL, self.value):
             raise EmailValueException(self.value)
     

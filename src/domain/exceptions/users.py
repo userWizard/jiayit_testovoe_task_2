@@ -11,6 +11,21 @@ class NameValueException(ApplicationException):
         return f'The field {self.text} contains incorrect characters.'
 
 @dataclass(eq=False)
+class EmptyNameException(ApplicationException):
+    
+    @property
+    def message(self):
+        return 'The name field should not be empty.'
+
+
+@dataclass(eq=False)
+class EmptyEmailException(ApplicationException):
+    
+    @property
+    def message(self):
+        return 'The emaiil field should not be empty.'
+
+@dataclass(eq=False)
 class EmailValueException(ApplicationException):
     text: str
     
